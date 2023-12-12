@@ -12,5 +12,7 @@
 - create a diagram using Mermaid.live
 ``` 
 
-log:\
+### log:
+
 231209 - implemented user story, update README, added digrams\
+

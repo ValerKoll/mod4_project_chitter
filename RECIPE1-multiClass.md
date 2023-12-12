@@ -1,5 +1,6 @@
 # === CHITTER === 
-## core design
+## Core design
+<img src="static/tdd-iceberg.png">
 
 ### 1. User request
 
@@ -47,7 +48,7 @@ I can stay constantly tapped in to the shouty box of Chitter
 >comment\
 >...
 
-<img src="static/chitter diagram ver 01.png">
+<img src="static/_diagrams/chitter_diagram_ver01.png">
 
 _excalidraw.com_
 
@@ -76,6 +77,9 @@ comment
     __eq__
     __repr__
 ```
+.\
+.\
+.
 ### 4. Implement code
 ```python
 class user_repository():
@@ -99,9 +103,26 @@ class user_repository():
 #-------------------
 class user():
     # -> id, name, username, password
+    # ACTION: check for username lenght >= 3 & <= 12, only alpha chars, and set to be unique. ( it needs implementation with database-query)  
+    # ACTION: check for valid password=> can contain the chars %&!?,
+    #    must be longer than 10 chars and contain at least 1 number
 
-    __eq__
-    __repr__
+    def is_valid_username():
+        # <- username
+        # exe: check len >= 3 & <= 12, alphanumeric chars only,
+        #       not startitng with a number
+        #       call external function to check for uniqueness
+        # -> True or False
+
+    def is_valid_password():   # => check password validity
+        # <- password
+        # exe: check len >= 10 & <= 20, alpha chars + %&!?, 
+        #       must have 1+ digit
+        # -> True or False
+
+    __eq__   # => for testing only 
+
+    __repr__ # => for testing and CLI printout
 #-------------------
 class post_repository():
     # -> connection
@@ -111,16 +132,19 @@ class post_repository():
         # exe: fetch data
         # -> a list of post instances
         pass
+
     def find()
         # <- post id, user id
         # exe: fetch data - 1 entry
         # -> 1 instance of post (connected to user)
         pass
+
     def add()
         # <- 1 post instance
         # exe: input data - 1 entry
         # -> None
         pass
+
 #-------------------
 class post():
     # -> id, title, content, time_stamp, user_id
@@ -153,50 +177,82 @@ class comment():
     __eq__
     __repr__
 #-------------------------
+```
+
+### 5. Testing
+>
+#### a. Create Examples as Unit Tests
+
+_Create tests, where appropriate, of the behaviour of each relevant class at a more granular level of detail._
+
+```python
+"""
+give a correct id, name, username and password
+returns true and store a correct instance
+"""
+user = User(1, "Peter Pan", "petpan", "password123")
+str(user) # => "User(Peter Pan, trpan, password123)"
+
+"""
+give 2 instance of user
+returns true if the 2 instances contains same values
+"""
+user1 = User(1, "Peter Pan", "petpan", "password123")
+user2 = User(1, "Peter Pan", "petpan", "password123")
+user1 == user2 # => True
+
+"""
+give an incorrect username and/or incorrect name and/or incorrect password
+returns False or True accordingly
+"""
+user = User(1, "Peter Pan", "pn", "password123")
+user.is_valid  #=> False
+user = User(1, "Peter Pan", "peter32", "password32")
+user.is_valid  #=> True
+user = User(1, "Peter Pan", "peter32", "passw£!?d123")
+user.is_valid  #=> True
+[...]
+
+"""
+give an incorrect username and/or incorrect name and/or incorrect password
+returns an "error message" accordingly
+"""
+user = User(1, "Peter Pan", "pn", "password123")
+user.generate_errors  #=> username too short
+user = User(1, "Peter Pan", "peter32", "passwo")
+user.generate_errors  #=> password too short
+user = User(1, "Peter Pan", "peter32", "passwordpeter")
+user.generate_errors  #=> incorrect password
+[...]
 
 ```
+
+
+
+
+
+
+
 
 >>>>>> TO BE CONTINUED
 
-### 5. Testing
-#### a. Create Examples as Integration Tests
-`==========================`\
-_Create examples of the classes being used together in different situations and
-combinations that reflect the ways in which the system will be used._
+>
+#### b. Create Examples as Integration Tests
+_Create tests for the classes being used together in different situations and combinations that reflect the ways in which the system will be used_
 
 ```python
-# EXAMple
-
 """
-Given a library
-When we add two tracks
-We see those tracks reflected in the tracks list
+When we add two users
+We see those users reflected in the tracks list
 """
-library = MusicLibrary()
-track_1 = Track("Carte Blanche", "Veracocha")
-track_2 = Track("Synaesthesia", "The Thrillseekers")
-library.add(track_1)
-library.add(track_2)
-library.tracks # => [track_1, track_2]
+user_repo = UserRepository()
+t = T("Carte Blanche", "Veracocha")
+t2 = T("Synaesthesia", "The Thrillseekers")
+library.add(t_1)
+library.add(t_2)
+library.users # => [u_1, u_2]
 ```
 
-#### b. Create Examples as Unit Tests
-
-_Create examples, where appropriate, of the behaviour of each relevant class at
-a more granular level of detail._
-
-```python
-# EXAMPLE
-
-"""
-Given a track with a title and an artist
-We see the title reflected in the title property
-"""
-track = Track("Carte Blanche", "Veracocha")
-track.title # => "Carte Blanche"
-```
-
-_Encode each example as a test. You can add to the above list as you go._
 
 ## 5. Implement the Behaviour
 
