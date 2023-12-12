@@ -1,5 +1,8 @@
 # mod4_project_chitter
 
+<div align='center'><h3>WELCOME TO</h3><br><img src="static/logo.png" width=200><br>an mock version for testing purpose<br> ---------------------------------------------</div>
+
+
 ### Initial steps
 ```
 - set up a new gitHub repo,

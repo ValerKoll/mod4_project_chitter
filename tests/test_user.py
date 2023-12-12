@@ -27,16 +27,16 @@ def test_incorrent_values():
     #
     #too short
     user = User(1, "Peter Pan", "pn", "password123")
-    assert user.is_valid_username()  == False
+    assert user.is_valid() == False
     #start with 1 digit 
     user = User(1, "Peter Pan", "1eter32", "password32")
-    assert user.is_valid_username()  == False
+    assert user.is_valid() == False
     #correct input
     user = User(1, "Peter Pan", "peter32", "passw£!?d123")
-    assert user.is_valid_username()  == True
+    assert user.is_valid() == True
     #too long
     user = User(1, "Peter Pan", "peter32morethan12", "passw£!?d123")
-    assert user.is_valid_username()  == False
+    assert user.is_valid() == False
 
 """
 give a name or a username with an empty space at the begining or the end
@@ -52,24 +52,32 @@ give an username with an empty space in between 2+ words
 check for an input with a single word
 returns False
 """
-def test_remove_empty_spaces():
+def test_reject_empty_spaces_in_between():
     # peter _space_ 23 not be accepted
     user = User(1, "Peter Pan", " peter 23 ", "password123")
-    assert user.is_valid_password()  == False
+    assert user.is_valid()  == False
     # peter23 with not space ==> ok
     user = User(1, "Peter Pan", " peter23 ", "password123")
-    assert user.is_valid_password()  == True
+    assert user.is_valid()  == True
 
 """
-give an username with:
+give an password with:
     wrong chars,
     too short or too long,
     including special chars without '%','&','!','?',
     not containing at least 1+ digit
 returns False
 """
-
-
+def test_given_wrong_password():
+    # too short
+    user = User(1, "Peter Pan", "peter23", "pa")
+    assert user.is_valid() == False
+    # too long
+    user = User(1, "Peter Pan", "peter23", "passwordtoolongtoolong")
+    assert user.is_valid() == False
+    # non special chars present
+    user = User(1, "Peter Pan", "peter23", "pa")
+    assert user.is_valid() == False
 
 """
 give an incorrect username and/or incorrect name and/or incorrect password
