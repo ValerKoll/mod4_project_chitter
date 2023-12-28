@@ -3,7 +3,7 @@ class User():
     
     def __init__(self, id, name, username, password):
         self.id = id   # to implement checks
-        self.name = name.strip() # to implement checks
+        self.name = self.validate_name(name.strip())
         self.username = self.validate_username(username.strip())
         self.password = self.validate_password(password.strip())
     
@@ -14,7 +14,14 @@ class User():
             self.username is not None,
             self.password is not None
             ])
+        
+    #check if len >= 3
+    def validate_name(self, text_to_check):
+        if len(text_to_check) >= 3:
+            return text_to_check
+        return None
     
+    #check: lenght, if first char is not digit, =1 word only
     def validate_username(self, text_to_check):
         if all([
             len(text_to_check) >= 3,
@@ -23,8 +30,7 @@ class User():
             self.check_fragmentation(text_to_check)
             ]):
             return text_to_check
-        else:
-            return None
+        return None
     
     #check: lenght, if alhpanumeric, =1 word only, optional special chars
     def validate_password(self, text_to_check):

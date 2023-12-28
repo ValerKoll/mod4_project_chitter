@@ -55,6 +55,16 @@ def test_remove_empty_spaces():
     assert user.username  == "peter23"
 
 """
+given empty name or too short name <3
+return None
+"""
+def test_check_name_too_short():
+    user = User(1, "", "peter23", "password£123")
+    assert user.is_valid() == False
+    user = User(1, "Pe", "peter23", "password£123")
+    assert user.is_valid() == False
+
+"""
 give an username with an empty space in between 2+ words
 check for an input with a single word
 returns False
@@ -90,15 +100,3 @@ def test_given_wrong_password():
     user = User(1, "Peter Pan", "peter23", "password&?£!")
     assert user.is_valid() == False
 
-"""
-give an incorrect username and/or incorrect name and/or incorrect password
-returns an "error message" accordingly
-"""
-#def test_error_messaging():
-# user = User(1, "Peter Pan", "pn", "password123")
-# user.generate_errors  #=> username too short
-# user = User(1, "Peter Pan", "peter32", "passwo")
-# user.generate_errors  #=> password too short
-# user = User(1, "Peter Pan", "peter32", "passwordpeter")
-# user.generate_errors  #=> incorrect password
-# [...]

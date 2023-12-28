@@ -1,63 +1,101 @@
 # Database/Tables Design Recipe
 
 
-
-
-
->>>>>> TO BE CONTINUED
-
-Database: ... <br>
-Database: ..._test <br>
-
-## 1. Extract nouns from the user stories or specification
+### 1. Extract nouns from the user request
 
 ```
-User: "I want insert a new entry in the table albums"
+phase1
+-------
+I can let people know what I am doing
+ >> post a message (peep) to chitter
+I can see what others are saying
+ >> see all peeps in reverse chronological order
+I can better appreciate the context of a peep
+ >> see the time at which it was made
+I can post messages on Chitter as me
+ >> sign up for Chitter
+
+
+phase 2
+--------
+I can post messages on Chitter as me
+ >> log in to Chitter
+I can avoid others posting messages on Chitter as me
+ >> log out of Chitter
+
+phase 3
+-------
+I can stay constantly tapped in to the shouty box of Chitter
+ >> receive an email if I am tagged in a Peep
 ```
 
+
 ```
->>> Nouns:
->>>  album, title, release year
+Nouns:
+>>>  users, posts, comments, time,
+>>>  sign up, log in, log out, send emails
+
 ```
 
-## 2. Set Table Name and Columns
+### 2. Set DB names, Table Names and Fields
 
-| table `albums`        | Properties              |
-| --------------------- | ----------------------- |
-|                       | `title`                 |
-|                       | `release year`          |
-|                       | `artist_id`             |
+Database: chitter_library <br>
+Database: chitter_library_test <br>
 
 
+| table `users`   | Properties             | data  type |
+| --------------- | ---------------------- |------------|
+|                 | `id`                   | SERIAL     |
+|                 | `name`                 | VARCHAR    |
+|                 | `username`             | VARCHAR    |
+|                 | `password`             | VARCHAR    |
+
+| table `posts`   | Properties             | data  type |
+| --------------- | ---------------------- |------------|
+|                 | `id`                   | SERIAL     |
+|                 | `title`                | VARCHAR    |
+|                 | `comment`              | VARCHAR    |
+|                 | `time_stamp`           | VARCHAR    |
+|                 | 'user_id'              | INTEGER    |
+
+[...]
 
 
-## 3. column types
 
 [Here's a full documentation of PostgreSQL data types](https://www.postgresql.org/docs/current/datatype.html).
 
-id: SERIAL
-title: VARCHAR(255)
-release_year: int
-artist_id: int
 
 
 
-## 4. SQL
+
+### 3. Deploy the SQL
 
 ```sql
-CREATE TABLE albums (
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255),
+  username VARCHAR(255),
+  password VARCHAR(255)
+);
+INSERT INTO users (name, username, password) VALUES (, );
+
+CREATE TABLE posts (
   id SERIAL PRIMARY KEY,
   title VARCHAR(255),
-  release_year INTEGER
-  artist_id INTEGER
+  content VARCHAR(255)
+  time_stamp VARCHAR(255)
+  user_id INTEGER
 );
+INSERT INTO posts (title, content, time_stamp, user_id) VALUES (, );  # DATE ='YYYY-MM-DD HH:MM'
 
 ```
+>>>>>> TO BE CONTINUED
 
-## 5. table (if needs)
+### 5. create the table
 
 ```bash
-psql -h 127.0.0.1 database_name < music_library2.sql
+psql -h 127.0.0.1 chitter_library < chitter_library.sql
+psql -h 127.0.0.1 chitter_library_test < chitter_library.sql
 ```
 ## 6. seed the table (if needs) 
 

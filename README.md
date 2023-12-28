@@ -6,13 +6,21 @@
 ### Initial steps
 ```
 - set up a new gitHub repo,
-- add folders and setup files
-- add recipe for classes, routes and database
+- added folders and setup files
+- added recipe for classes, routes and database
 
 - add user request to the recipe file
 - draw few main initial concepts
 
 - create a diagram using Mermaid.live
+
+Implementation:
+- multi-class recipe 
+- multi-class TDD phase1: class User and class Post
+
+- database and tables recipe (require DB for implement TDD phase2)
+- added DATABASE_CONNECTION.py
+---- in progress 
 ``` 
 
 ### log:

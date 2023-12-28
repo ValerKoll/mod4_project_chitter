@@ -253,6 +253,16 @@ user.name # => "Peter Pan"
 user.username  # => "peter23"
 
 """
+given empty name or too short name <3
+return None
+"""
+user = User(1, "", "peter23", "password£123")
+user.isvalid #=>false
+user = User(1, "Pe", "peter23", "password£123")
+user.isvalid #=>false
+
+
+"""
 give an username with an empty space in between 2+ words
 check for an input with a single word
 returns False
@@ -277,18 +287,6 @@ user.is_valid() == False
 user = User(1, "Peter Pan", "peter23", "password123")
 user.is_valid() == False
 [...]
-
-"""
-given an incorrect username and/or incorrect name and/or incorrect password
-returns an "error message" accordingly
-"""
-user = User(1, "Peter Pan", "pn", "password123")
-user.generate_errors  #=> username too short
-user = User(1, "Peter Pan", "peter32", "passwo")
-user.generate_errors  #=> password too short
-user = User(1, "Peter Pan", "peter32", "passwordpeter")
-user.generate_errors  #=> incorrect password
-[...]
 ```
 ===================
 ```python
@@ -310,16 +308,49 @@ given 1 instance of user
 check for DB integrity
 """
 # implement DB_CONNECTION first
+
+
+
+"""
+given an incorrect username and/or incorrect name and/or incorrect password
+returns an "error message" accordingly
+"""
+user = User(1, "Peter Pan", "pn", "password123")
+user.generate_errors  #=> username too short
+user = User(1, "Peter Pan", "peter32", "passwo")
+user.generate_errors  #=> password too short
+user = User(1, "Peter Pan", "peter32", "passwordpeter")
+user.generate_errors  #=> incorrect password
+[...]
+
 ```
 ===================
 ```python
 CLASS POST
 """
-given a correct id, title, content, user_id , #note: (timestamp to be added)
+given a correct id, title, content, user_id,    #note: (timestamp to be added)
 returns true and store a correct instance adding timestamp
 """
 post = post(1, "My first post", "I knew that too many rings have been left in Middle Earth", 1)
 str(post) # => "Post(My First Post, I knew that too many rings have been left in Middle Earth, (current timestamp: 2023-12-23 12:20), 1)"
+
+"""
+given an incorret title / content
+   correct title and content
+returns true and store a correct instance adding timestamp
+"""
+post = post(1, "My first post", "I knew that too many rings have been left in Middle Earth, I knew that too many rings have been left in Middle Earth, I knew that too many rings have been left in Middle Earth, I knew that too many rings have been left in Middle Earth", 1)
+str(post) # => "Post(My First Post, I knew that too many rings have been left in Middle Earth, I knew that too many rings have been left in Middle Earth, I knew that too many rings have been left in Middle Earth, I knew that too many r..., (current timestamp: 2023-12-23 12:20), 1)"
+[...]
+
+"""
+given empty title and/or empty comment
+returns None
+"""
+post = post(1, "", "I knew that too many rings have been left in Middle Earth", 1)
+post.is_valid #=> False
+post = post(1, "My first post", "", 1)
+post.is_valid #=> False
 
 ```
 ===================
@@ -364,7 +395,7 @@ library.users # => [u_1, u_2]
 ```
 
 
-## 5. Implement the Behaviour
+### 6. Implement the Behaviour
 
 _After each test you write, follow the test-driving process of red, green,
 refactor to implement the behaviour._
