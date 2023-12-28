@@ -20,6 +20,13 @@ Implementation:
 
 - database and tables recipe (require DB for implement TDD phase2)
 - added DATABASE_CONNECTION.py
+- added test_DB_connection.py
+
+- create DATABASE + testing DATABASE
+
+- set testing DATABASE as main (until testing completed)
+- added seed file for DB music_library
+- run APP.PY, execute SQL query and printed result (3 new entry in table users)
 ---- in progress 
 ``` 
 

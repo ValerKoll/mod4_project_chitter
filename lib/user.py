@@ -2,6 +2,7 @@ class User():
     SPECIAL_CHARS = ['%','&','!','?']
     
     def __init__(self, id, name, username, password):
+        self.errors = []
         self.id = id   # to implement checks
         self.name = self.validate_name(name.strip())
         self.username = self.validate_username(username.strip())
@@ -19,6 +20,7 @@ class User():
     def validate_name(self, text_to_check):
         if len(text_to_check) >= 3:
             return text_to_check
+        self.errors.append("wrong name input")
         return None
     
     #check: lenght, if first char is not digit, =1 word only
@@ -30,6 +32,7 @@ class User():
             self.check_fragmentation(text_to_check)
             ]):
             return text_to_check
+        self.errors.append("wrong username input")
         return None
     
     #check: lenght, if alhpanumeric, =1 word only, optional special chars
@@ -43,6 +46,7 @@ class User():
             self.check_special_chars(text_to_check)
             ]):
             return text_to_check
+        self.errors.append("wrong password input")
         return None
     
     # TRUE if 1 word only,  FALSE if 2+ words 

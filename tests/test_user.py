@@ -30,6 +30,7 @@ def test_incorrent_username_and_or_password():
     #username too short
     user = User(1, "Peter Pan", "pn", "password123")
     assert user.is_valid() == False
+    assert bool("wrong username input" in user.errors) == True
     #username start with 1 digit 
     user = User(1, "Peter Pan", "1eter32", "password32")
     assert user.is_valid() == False

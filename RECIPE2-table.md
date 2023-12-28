@@ -56,15 +56,13 @@ Database: chitter_library_test <br>
 |                 | `title`                | VARCHAR    |
 |                 | `comment`              | VARCHAR    |
 |                 | `time_stamp`           | VARCHAR    |
-|                 | 'user_id'              | INTEGER    |
+|                 | `user_id`              | INTEGER    |
 
 [...]
 
 
 
 [Here's a full documentation of PostgreSQL data types](https://www.postgresql.org/docs/current/datatype.html).
-
-
 
 
 

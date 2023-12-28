@@ -110,18 +110,23 @@ class user_repository():
 
     def all()
         # <- None
-        # exe: fetch data
+        # exe: fetch all data
         # -> a list of user instances
+        pass
+    def add()
+        # <- 1 user instance
+        # exe: add data - 1 entry
+        # -> None
+        pass
+    def delete()
+        # <- 1 user instance
+        # exe: delete data - 1 entry
+        # -> TRUE/false
         pass
     def find()
         # <- user id
         # exe: fetch data - 1 entry
         # -> 1 instance of user
-        pass
-    def add()
-        # <- 1 user instance
-        # exe: input data - 1 entry
-        # -> None
         pass
 
 #-------------------
@@ -288,6 +293,9 @@ user = User(1, "Peter Pan", "peter23", "password123")
 user.is_valid() == False
 [...]
 ```
+
+
+
 ===================
 ```python
 CLASS USER_REPOSITORY
@@ -295,32 +303,51 @@ CLASS USER_REPOSITORY
 calling ALL() 
 returns the right list of users
 """
-# implement DB_CONNECTION first
+feed library
+user_repository = User_repository()
+user.all #=>[
+#User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
+#User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
+#User(3, 'kevin Tosh', 'kevin-90', 'linux456789!')]
+
+
 """
 calling FIND()
 given an USER ID  
 returns instance of 1 user
 """
-# implement DB_CONNECTION first
+
+
 """
 calling ADD()
 given 1 instance of user 
 check for DB integrity
+  check if valid too
 """
-# implement DB_CONNECTION first
+user = User(0, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
+user_repository.add_user(user) #=> True    IS_VALID!
+user_repository.get_users() #=>
+#     User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
+#     User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
+#     User(3, 'kevin Tosh', 'kevin-90', 'linux456789!'),
+#     User(4, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
 
 
 
 """
 given an incorrect username and/or incorrect name and/or incorrect password
-returns an "error message" accordingly
+returns some "error message" accordingly
 """
 user = User(1, "Peter Pan", "pn", "password123")
-user.generate_errors  #=> username too short
+user.generate_errors  #=>  "wrong username input"
 user = User(1, "Peter Pan", "peter32", "passwo")
-user.generate_errors  #=> password too short
+user.generate_errors  #=> "wrong password input"
 user = User(1, "Peter Pan", "peter32", "passwordpeter")
-user.generate_errors  #=> incorrect password
+user.generate_errors  #=> "wrong password input"
+user = User(1, "Peter Pan", "p2", "p2")
+user.generate_errors  #=> "wrong username input, wrong password input"
+user = User(1, "P2", "p2", "p2")
+user.generate_errors  #=> "wrong name input, wrong username input, wrong password input"
 [...]
 
 ```
