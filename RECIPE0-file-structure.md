@@ -27,4 +27,5 @@ seeds/
 templates/
  |
 
+app.py
 ```

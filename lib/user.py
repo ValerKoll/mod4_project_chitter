@@ -1,4 +1,6 @@
 class User():
+    SPECIAL_CHARS = ['%','&','!','?']
+    
     def __init__(self, id, name, username, password):
         self.id = id   # to implement checks
         self.name = name.strip() # to implement checks
@@ -24,18 +26,34 @@ class User():
         else:
             return None
     
+    #check: lenght, if alhpanumeric, =1 word only, optional special chars
     def validate_password(self, text_to_check):
         if all([
             len(text_to_check) >= 10,
             len(text_to_check) <= 20,
-            self.check_fragmentation(text_to_check)
+            not(text_to_check.isnumeric()),
+            self.check_fragmentation(text_to_check),
+            self.has_digit(text_to_check),
+            self.check_special_chars(text_to_check)
             ]):
             return text_to_check
         return None
     
+    # TRUE if 1 word only,  FALSE if 2+ words 
     def check_fragmentation(self, text_to_check):
         return len(''.join(text_to_check.split())) == len(text_to_check)
-         
+    
+    # check if the password has at least 1 digit
+    def has_digit(self, text_to_check):
+        return any(char.isdigit() for char in text_to_check)
+    
+    # special chars are optionals. If special chars are present return TRUE if correct ones only are present
+    def check_special_chars(self, text_to_check):
+        if text_to_check.isalnum():
+            return True
+        else:
+            return bool(list(filter(lambda x : x in text_to_check, self.SPECIAL_CHARS)))
+        
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
         
