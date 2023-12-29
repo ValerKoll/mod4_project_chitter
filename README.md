@@ -29,7 +29,11 @@ Implementation:
 - run APP.PY, execute SQL query and printed result (3 new entry in table users)
 
 - added test_app.py
-- implemented 
+        see_dev_database.py
+- implemented changes in files: database_connection.py
+                                app.py
+                                conftest.py
+
 ---- in progress 
 ``` 
 
