@@ -27,6 +27,9 @@ Implementation:
 - set testing DATABASE as main (until testing completed)
 - added seed file for DB music_library
 - run APP.PY, execute SQL query and printed result (3 new entry in table users)
+
+- added test_app.py
+- implemented 
 ---- in progress 
 ``` 
 

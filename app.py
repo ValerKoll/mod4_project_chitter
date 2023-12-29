@@ -1,4 +1,7 @@
 from lib.database_connection import DatabaseConnection
+from flask import Flask, request
+
+app = Flask(__name__)
 
 connection = DatabaseConnection()
 connection.connect()

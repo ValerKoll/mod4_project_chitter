@@ -1,37 +1,43 @@
 # Route Design Recipe
-## 1. Design the Route Signature
 
+CRUD\
+create  (i.e.  add_users())\
+read    (i.e.  get_users(), find_user())\
+update  (i.e.  update_user())\
+delete  (i.e.  delete_user())\
+.
 
+### 1. Design the Routes
+
+```
+# retrive all users
+GET /users
+  Expected response: 200 (OK)
+  Expected response: "User(1, 'Peter Pan', 'peterpan', 'peter&1234')\nUser(2, 'Jenny Mill', 'notsoFar', 'docker£1234')\nUser(3, 'kevin Tosh', 'kevin-90', 'linux456789!')"
+
+# add 1 user
+POST /users
+    `name` string
+    `username` int
+    `password` int
+  Expected response: 200 (OK)
+  Expected response: ''
+```
+
+### 2. Implement Signature
+```python
+#########   USERS ROUTE   ##########
+@app.route('/users', methods=['GET'])
+  request.args['']   #return value for ..?id=1  ---> ['id']
+
+@app.route('/users', methods=['POST'])
+  request.form['name', 'username', 'password']
+####################################
+```
 
 >>>>>> TO BE CONTINUED
 
 
-```
-# albums route
-POST /albums
-    `title:` string
-    `release_year:` int
-    `artist_id:` int
-
-GET /artists
-    'all' int 1 or 2
-  Expected response: 200 (OK)
-  Expected response: "Album(Pixies, Rock)\nAlbum(ABBA, Pop)\nAlbum(Taylor Swift, Pop)\nAlbum(Nina Simone, Jazz)\n"
-  Expected response: 200 (OK)
-  Expected response: "Pixies, ABBA, Taylor Swift, Nina Simone"
-
-
-POST /artists
-    'name' string 
-    'genre' string
-  Expected response: 200 (OK)
-  Expected response: ''
-
-GET /artists
-    'all' int = 2
-  Expected response: 200 (OK)
-  Expected response: "Pixies, ABBA, Taylor Swift, Nina Simone, Wild nothing"
-```
 
 ## 2. Create Examples as Tests
 ```python

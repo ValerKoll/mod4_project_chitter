@@ -4,29 +4,13 @@
 ### 1. Extract nouns from the user request
 
 ```
-phase1
--------
-I can let people know what I am doing
- >> post a message (peep) to chitter
-I can see what others are saying
- >> see all peeps in reverse chronological order
-I can better appreciate the context of a peep
- >> see the time at which it was made
-I can post messages on Chitter as me
- >> sign up for Chitter
-
-
-phase 2
---------
-I can post messages on Chitter as me
- >> log in to Chitter
-I can avoid others posting messages on Chitter as me
- >> log out of Chitter
-
-phase 3
--------
-I can stay constantly tapped in to the shouty box of Chitter
- >> receive an email if I am tagged in a Peep
+(from RECIPE1 Analysis)
+- post messages adding username
+- retrive all messages showing main message and comments with usernames
+- and add timestamp too
+- add sign up functionality
+- using log in and out
+- add messaging service (advanced)
 ```
 
 

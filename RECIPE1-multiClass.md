@@ -29,7 +29,7 @@ phase 3
 I can stay constantly tapped in to the shouty box of Chitter
  >> receive an email if I am tagged in a Peep
 ```
-### 2. Analsys
+### 2. Analysis
 - post messages adding username
 - retrive all messages showing main message and comments with usernames
 - and add timestamp too
