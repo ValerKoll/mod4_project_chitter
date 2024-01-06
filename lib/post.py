@@ -1,11 +1,11 @@
 from datetime import datetime
 
 class Post():
-    def __init__(self, id, title, content, user_id):
+    def __init__(self, id, title, content, user_id, time_stamp=None):
         self.id = id
         self.title = self.validate_title(title.strip())
         self.content = self.validate_content(content.strip())
-        self.time_stamp = self.add_timestamp()
+        self.time_stamp = self.add_timestamp(time_stamp)
         self.user_id = user_id
 
     def is_valid(self):
@@ -41,14 +41,17 @@ class Post():
             text_to_return = text_to_return[:199] + "..."
         return text_to_return
     
-    # returns timestamp, for ie:2023-12-23 12:20
-    def add_timestamp(self):
-        now = datetime.now()
-        return now.strftime('%Y-%m-%d %H:%M')
+    # returns the instance value if not None
+    #   otherwise set the current timestamp, for ie:2023-12-23 12:20
+    def add_timestamp(self, time_stamp):
+        if not(time_stamp):
+            now = datetime.now()
+            return now.strftime('%Y-%m-%d %H:%M')
+        return time_stamp
         
     def __eq__(self, other):   # => for testing only
         return self.__dict__ == other.__dict__
     
     def __repr__(self): # => for testing and CLI printout
-        return f"Post({self.id}, {self.title}, {self.content}, {self.time_stamp}, {self.user_id})"
+        return f"Post({self.id}, {self.title}, {self.content}, {self.user_id}, {self.time_stamp})"
     

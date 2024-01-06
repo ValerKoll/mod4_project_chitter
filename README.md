@@ -1,6 +1,6 @@
 # mod4_project_chitter
 
-<div align='center'><h3>WELCOME TO</h3><br><img src="static/logo.png" width=200><br>an mock version for testing purpose<br> ---------------------------------------------</div>
+<div align='center'><h3>WELCOME TO</h3><br><img src="static/img/logo.png" width=200><br>an mock version for testing purpose<br> ---------------------------------------------</div>
 
 
 ### Initial steps
@@ -33,6 +33,8 @@ Implementation:
 - implemented changes in files: database_connection.py
                                 app.py
                                 conftest.py
+
+- run flask ( ; python app.py )
 
 ---- in progress 
 ``` 

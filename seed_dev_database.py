@@ -2,8 +2,11 @@ from lib.database_connection import DatabaseConnection
 
 # Run this file to reset your database using the seeds
 # ; pipenv run python seed_dev_database.py
-
-connection = DatabaseConnection(test_mode=False)
+#
+# comment the next line to set: DEBUG MODE OFF   (change in conftest.py too!!!)
+test_mode = True
+#######
+connection = DatabaseConnection(test_mode)
 connection.connect()
 connection.seed("seeds/chitter_library.sql")
 # Add your own seed lines below...

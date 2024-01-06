@@ -118,6 +118,11 @@ class user_repository():
         # exe: add data - 1 entry
         # -> None
         pass
+    def update()
+        # <- 1 user instance
+        # exe: add data - 1 entry
+        # -> None
+        pass
     def delete()
         # <- 1 user instance
         # exe: delete data - 1 entry
@@ -220,8 +225,10 @@ class comment_repository():
 
 _List of tests of the behaviour of each relevant class at a more granular level of detail._
 
+
+
+#### CLASS USER    =======================
 ```python
-CLASS USER
 """
 given a correct id, name, username and password
 returns true and store a correct instance
@@ -292,46 +299,6 @@ user.is_valid() == False
 user = User(1, "Peter Pan", "peter23", "password123")
 user.is_valid() == False
 [...]
-```
-
-
-
-===================
-```python
-CLASS USER_REPOSITORY
-"""
-calling ALL() 
-returns the right list of users
-"""
-feed library
-user_repository = User_repository()
-user.all #=>[
-#User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
-#User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
-#User(3, 'kevin Tosh', 'kevin-90', 'linux456789!')]
-
-
-"""
-calling FIND()
-given an USER ID  
-returns instance of 1 user
-"""
-
-
-"""
-calling ADD()
-given 1 instance of user 
-check for DB integrity
-  check if valid too
-"""
-user = User(0, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
-user_repository.add_user(user) #=> True    IS_VALID!
-user_repository.get_users() #=>
-#     User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
-#     User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
-#     User(3, 'kevin Tosh', 'kevin-90', 'linux456789!'),
-#     User(4, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
-
 
 
 """
@@ -350,10 +317,67 @@ user = User(1, "P2", "p2", "p2")
 user.generate_errors  #=> "wrong name input, wrong username input, wrong password input"
 [...]
 
+
 ```
-===================
+
+
+#### CLASS USER_REPOSITORY   =======================
+
 ```python
-CLASS POST
+"""
+calling ALL() 
+returns the right list of users
+"""
+feed library
+user_repository = User_repository()
+user.all #=>[
+#User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
+#User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
+#User(3, 'kevin Tosh', 'kevin-90', 'linux456789!')]
+
+
+"""
+calling FIND()
+given an USER ID  
+returns instance of 1 user
+"""
+feed library
+user_repository = User_repository()
+user.execute id=2 #=>
+#User(2, 'Jenny Mill', 'notsoFar', 'docker£1234')
+user.execute id=99 #=>
+#error
+
+"""
+calling ADD()
+given 1 instance of user 
+check for DB integrity
+  check if valid too
+"""
+user = User(0, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
+user_repository.add_user(user) #=> True    IS_VALID!
+user_repository.get_users() #=>
+#     User(1, 'Peter Pan', 'peterpan', 'peter&1234'),
+#     User(2, 'Jenny Mill', 'notsoFar', 'docker£1234'),
+#     User(3, 'kevin Tosh', 'kevin-90', 'linux456789!'),
+#     User(4, "Micheal Bubble", "mike123BUB", "rndnowtv1234")
+
+"""
+calling UPDATE()
+given user id
+  check if valid too
+"""
+
+"""
+calling DELETE()
+given user id
+  check if valid too
+"""
+```
+
+
+#### CLASS POST ===================
+```python
 """
 given a correct id, title, content, user_id,    #note: (timestamp to be added)
 returns true and store a correct instance adding timestamp
@@ -380,9 +404,67 @@ post = post(1, "My first post", "", 1)
 post.is_valid #=> False
 
 ```
-===================
+
+
+#### CLASS POST_REPOSITORY ===================
 ```python
-CLASS POST_REPOSITORY
+"""
+calling ALL() 
+returns the all list of posts
+"""
+feed library
+post_repository = Post_repository()
+post.all #=>[
+#Post(1, This is great, The algorithm uses a simple language-independent definition of a word as groups of consecutive letters. The definition works in many contexts but it means that apostrophes in contractions, 2023-12-09 12:20, 1)
+#Post(1, title 2, Great answer, and comments highlight that in python not everything behaves the way you need it to, but there-s always convenient ways to make it so. The most convenient way is often importing a purpose-built library, 2023-12-10 13:10, 1)
+#Post(1, My motorbike, Always one of the most stylish and fun of the retro scrambler breed, the only let-down for the Fantic Caballero 500 was the meagre performance of its somewhat lumpy single-cylinder engine. This new 700cc twin answers that criticism with more power, 2023-12-13 14:50, 1)
+#Post(1, Contact me now for more, This new 700 is a follow-up to the original, 2019 500cc single-cylinder version which was already a great starting point given its authentic retro-mod scrambler style, fun handling and decent quality. This new 700 builds on that with extra, 2023-12-19 11:00, 1)
+#]
+
+
+"""
+calling FIND()
+given an USER ID  
+returns instance of 1 user
+"""
+feed library
+post_repository = Post_repository()
+post_repository.find id=2 #=>
+#Post(1, title 2, Great answer, and comments highlight that in python not everything behaves the way you need it to, but there-s always convenient ways to make it so. The most convenient way is often importing a purpose-built library, 2023-12-10 13:10, 2)
+post_repository.find id=99 #=>
+#error
+
+"""
+calling ADD()
+given 1 instance of user 
+check for DB integrity
+  check if valid too
+"""
+post_repository = Post_repository()
+post_repository.add #=>0, There never been better time, A new 700 is a follow-up to the original, 2019 500cc starting point given its authentic retro-mod scrambler style, fun handling and decent quality. This new 700 builds on that with extra, 2023-12-21 12:00, 2) #=> True    IS_VALID!
+post_repository.all() #=>[
+#Post(1, This is great, The algorithm uses a simple language-independent definition of a word as groups of consecutive letters. The definition works in many contexts but it means that apostrophes in contractions, 2023-12-09 12:20, 1)
+#Post(1, title 2, Great answer, and comments highlight that in python not everything behaves the way you need it to, but there-s always convenient ways to make it so. The most convenient way is often importing a purpose-built library, 2023-12-10 13:10, 2)
+#Post(1, My motorbike, Always one of the most stylish and fun of the retro scrambler breed, the only let-down for the Fantic Caballero 500 was the meagre performance of its somewhat lumpy single-cylinder engine. This new 700cc twin answers that criticism with more power, 2023-12-13 14:50, 3)
+#Post(1, Contact me now for more, This new 700 is a follow-up to the original, 2019 500cc single-cylinder version which was already a great starting point given its authentic retro-mod scrambler style, fun handling and decent quality. This new 700 builds on that with extra, 2023-12-19 11:00, 1)
+#Post(1, There never been better time, A new 700 is a follow-up to the original, 2019 500cc starting point given its authentic retro-mod scrambler style, fun handling and decent quality. This new 700 builds on that with extra, 2023-12-21 12:00, 2)
+
+
+"""
+calling UPDATE()
+given user id
+  check if valid too
+"""
+feed library
+post_repository = Post_repository()
+
+"""
+calling DELETE()
+given user id
+  check if valid too
+"""
+feed library
+post_repository = Post_repository()
 
 ```
 

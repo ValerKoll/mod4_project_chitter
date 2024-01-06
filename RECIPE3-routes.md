@@ -7,40 +7,97 @@ update  (i.e.  update_user())\
 delete  (i.e.  delete_user())\
 .
 
-### 1. Design the Routes
+### 1. Setting the app flow
+```
+HOME PAGE
+  LOGIN PAGE
+```
+### 2. Routes Design
+
+ action       |ROUTE                      | url
+--------------|---------------------------|--------------
+   home page  |GET '/'                    |   'index.html'
+   login      |GET '/account/login'       |   'account.html'
+   register   |GET '/account/register'    |   'account.html'
+   loggingIn  |POST '/user/login'         | '' --> 'index.html'
+   registering|POST '/user/register'      | '' --> 'index.html'
+   logout     |GET '/account/logout'      | '' -->  'index.html'
+   sort_posts |GET '/<home_page_section>' |   'index.html'
+
 
 ```
-# retrive all users
-GET /users
-  Expected response: 200 (OK)
-  Expected response: "User(1, 'Peter Pan', 'peterpan', 'peter&1234')\nUser(2, 'Jenny Mill', 'notsoFar', 'docker£1234')\nUser(3, 'kevin Tosh', 'kevin-90', 'linux456789!')"
+# main page - no logged in
+GET '/'
+  arguments: None
+  return MAIN PAGE showing:
+    list of recent posts
+    options to navigate
+    link for login or username+logout 
+  
+  TESTS:
+    Expected response: 200 (OK)
+    expect(title) == 'Home Page' 
+```
+```
+# log in page
+GET '/account/<section>'
+  arguments: None
+  return account.html, sections [LOGIN PAGE, REGISTER PAGE]
+    LOGIN PAGE showing:
+      form --> POST '/user/login'   data=form data + set username
+      cancel ---> GET '/'
+    REGISTER PAGE showing:
+      form --> POST '/user/register'    data=form data + set username
+      cancel ---> GET '/'
+  
+  TESTS:
+    Expected response: 200 (OK)
+    expect(title) == 'Please Login' or expect(title) == 'Register' 
 
-# add 1 user
-POST /users
-    `name` string
-    `username` int
-    `password` int
+```
+```
+# ....page 
+POST '/'
   Expected response: 200 (OK)
-  Expected response: ''
+  Expected response: 
+
 ```
 
-### 2. Implement Signature
+
+### 3. Implement Signature
 ```python
+#########   HOME PAGE ROUTES   ######
+@app.route('/', methods=['GET'])
+
 #########   USERS ROUTE   ##########
 @app.route('/users', methods=['GET'])
-  request.args['']   #return value for ..?id=1  ---> ['id']
 
 @app.route('/users', methods=['POST'])
-  request.form['name', 'username', 'password']
 ####################################
 ```
+
+
+
+
+
+## 4. Create Examples as Tests
+```python
+"""
+Action:     GET request to '/'
+Arguments:  None
+Result:    200 (OK)
+          'main - nologin'
+"""
+def test_main_page_nologin(web_client):
+  response = web_client.get("/")
+  response.status_code == 200
+  #assert response.data.decode("utf-8") == "main - nologin"
+  
 
 >>>>>> TO BE CONTINUED
 
 
 
-## 2. Create Examples as Tests
-```python
 """
 given: Voyage & 2022 & 2
  action: 1.add new entry to albums
@@ -106,7 +163,7 @@ GET /artists
 
 ```
 
-## 3. Test-drive the Route
+## . Test-drive the Route
 
 see test_artists.py
 

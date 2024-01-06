@@ -1,0 +1,22 @@
+#wrapper {
+    background-color: antiquewhite;
+    width: 90%;
+    text-align: center;
+    align-content: center;
+}
+
+#nav {
+    width: 70%;
+    height: 5em;
+}
+#menu {
+    text-align: center;
+    border: 2px solid black;
+}
+#nav .logo img {
+    width: 10em
+}
+
+.aaa {
+    background-color: aqua;
+}

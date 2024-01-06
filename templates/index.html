@@ -1,19 +1,64 @@
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        Simple Text
-    </body>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home Page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/css/main.css">
+  </head>
+  <body>
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Nav -->
+      <nav id="nav">
+        <div class="logo">
+          <img src="static/img/logo.png">
+        </div>
+        <div id="menu">
+          MENU BAR:&nbsp;<a href="/index">HOME PAGE</a>
+          {% if data['current_active_user'] %}
+            <h1><strong>{{ data['current_active_user'] }}</strong> <a href="/account/logout">LOG OUT</a> </h1>
+          {% else %}
+            <p></p><strong><a href="/account/login">Log in</a></strong></p>
+          {% endif %}
+        </div>
+      </nav>
+      <!-- Header -->
+      <header id="header" class="alt">
+        <h1 id="title">Chitter App</h1>
+      </header>
+      <!-- Main -->
+
+        <p><a href="/current_user_posts">Show user posts</a></p>
+
+        <!-- SHOW ALL USER RECENT POST if section not set -->
+        {% if data['home_page_section']=='index' %}   
+          <p>List of recent posts</p>
+          <ul id="post_list">
+          {% for post in data['post_list'] %}
+            <li>
+              User:&nbsp{{ post['user_id'] }}<br>
+              Title:&nbsp;{{ post['title'] }}<br>
+              Content:&nbsp;{{ post['content'] }}
+            </li>
+          {% endfor %}
+          </ul>
+        <!-- SHOW ONLYU THIS USER if user logged -->
+        {% elif (data['home_page_section']=='current_user_posts' and data['current_active_user']) %}
+          <h2>only {{ data['current_active_user'] }} user posts</h2>
+          <!-- insert posts -->
+        {% endif %}
+      <!-- Footer -->
+      <footer>
+        FOOTER HERE
+      </footer>
+    </div>
+  </body>
 </html>
+
