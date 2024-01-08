@@ -1,4 +1,4 @@
-import os
+import os, copy
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
 from lib.user import User
@@ -12,37 +12,40 @@ from lib.post_repository import Post_repository
 # Create a new Flask app
 app = Flask(__name__)
 
-#init USER TEMP VAR to - assign None or current user
-class testUser():
-    id = None
-
-current_user = testUser
-current_user.id = None
-
+### store current logged in user - assign None or current user
+# next phase:  implement cookies
+#
+#  list representing USER: [ID, NAME]
+NULL_USER = User(None, None, None, None)
+active_user = copy.copy(NULL_USER)
+#
+########################
 
 # ==== Home Page - routes
 #
 #   current_active_user: None or username
 #   index_section_id: None = see recent post
 #                     current_user_posts = see user only post
-# 
+#
 @app.route('/', methods=['GET'])
 def index():
     return redirect('/index')
 
 @app.route('/<home_page_section>', methods=['GET'])
 def index_subsection(home_page_section):
+    global active_user      #to be replaced with cookies
     _connection = get_flask_database_connection(app)
     post_repository = Post_repository(_connection)
-    if home_page_section == 'current_user_posts' and current_user.id:
-        rows = post_repository.find(current_user.id)
+    if home_page_section == 'current_user_posts' and active_user.is_valid():
+        rows = post_repository.find(active_user.id)
     else:
         rows = post_repository.all()
     data = {
-        'current_active_user': current_user.id,
+        'active_user_id': active_user.id,
+        'active_user_name': active_user.name,
         'home_page_section': home_page_section,
         'post_list': rows
-    }
+        }
     return render_template('index.html', data=data)
 
 
@@ -54,39 +57,50 @@ def index_subsection(home_page_section):
 # 
 @app.route('/account/<section>', methods=['GET'])
 def login(section):
-    if any([
-        (section == 'login' and current_user.id == None),
-        section == 'register'
-        ]):
+    global active_user      #to be replaced with cookies
+    if all([not(active_user.is_valid()) and
+            any([
+                section == 'login',
+                section == 'register'
+                ])
+            ]):
         return render_template('account.html', login_status=section)
-    if section == 'logout' and current_user.id:
-        current_user.id = None
-        return redirect('/')
+    elif all([
+        section == 'logout',
+        active_user.is_valid()
+        ]):
+        active_user = copy.copy(NULL_USER)
+    return redirect('/')
 
 
 # ==== User login/register Form
 #
-#   current_active_user: None or username
+#   active_user: None or username
 #   POST arg: login
 #             register
 #     
 @app.route('/user/<section>', methods=['POST'])
 def user(section):
+    global active_user      #to be replaced with cookies
+    status = '0'
     _connection = get_flask_database_connection(app)
-    post_repository = Post_repository(_connection)
+    user_repository = User_repository(_connection)
     if section == 'login':
         username = request.form['username']
         password = request.form['passcode']
-        current_user.id = post_repository.login(username, password)
+        query_result = user_repository.find(username, password)
+        if query_result[0]:
+            active_user = copy.copy(query_result[1])
+            return redirect('/')
         # --->>> store info in cookies
     elif section == 'register':
         name = request.form['name']
         username = request.form['username']
         password = request.form['passcode']
-        current_user.id = id
-        # --->>> store info in cookies
-        # ---->>>>   create user
-    return redirect('/')
+        query_result = user_repository.add(1, name, username, password)
+        if query_result[0]:
+            return redirect('/')
+    return f"WRONG: {query_result[1]}"
 
 
 

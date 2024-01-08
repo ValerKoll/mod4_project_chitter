@@ -4,9 +4,9 @@ class User():
     def __init__(self, id, name, username, password):
         self.errors = []
         self.id = id   # to implement checks
-        self.name = self.validate_name(name.strip())
-        self.username = self.validate_username(username.strip())
-        self.password = self.validate_password(password.strip())
+        self.name = self.validate_name(name)
+        self.username = self.validate_username(username)
+        self.password = self.validate_password(password)
     
     def is_valid(self):
         return all([
@@ -18,34 +18,40 @@ class User():
         
     #check if len >= 3
     def validate_name(self, text_to_check):
-        if len(text_to_check) >= 3:
-            return text_to_check
+        if text_to_check:
+            text_to_check = text_to_check.strip()
+            if len(text_to_check) >= 3:
+                return text_to_check
         self.errors.append("wrong name input")
         return None
     
     #check: lenght, if first char is not digit, =1 word only
     def validate_username(self, text_to_check):
-        if all([
-            len(text_to_check) >= 3,
-            len(text_to_check) <= 12,
-            not(text_to_check[0].isdigit()),
-            self.check_fragmentation(text_to_check)
-            ]):
-            return text_to_check
+        if text_to_check:
+            text_to_check = text_to_check.strip()
+            if all([
+                len(text_to_check) >= 3,
+                len(text_to_check) <= 12,
+                not(text_to_check[0].isdigit()),
+                self.check_fragmentation(text_to_check)
+                ]):
+                return text_to_check.strip()
         self.errors.append("wrong username input")
         return None
     
     #check: lenght, if alhpanumeric, =1 word only, optional special chars
     def validate_password(self, text_to_check):
-        if all([
-            len(text_to_check) >= 10,
-            len(text_to_check) <= 20,
-            not(text_to_check.isnumeric()),
-            self.check_fragmentation(text_to_check),
-            self.has_digit(text_to_check),
-            self.check_special_chars(text_to_check)
-            ]):
-            return text_to_check
+        if text_to_check:
+            text_to_check = text_to_check.strip()
+            if all([
+                len(text_to_check) >= 10,
+                len(text_to_check) <= 20,
+                not(text_to_check.isnumeric()),
+                self.check_fragmentation(text_to_check),
+                self.has_digit(text_to_check),
+                self.check_special_chars(text_to_check)
+                ]):
+                return text_to_check
         self.errors.append("wrong password input")
         return None
     

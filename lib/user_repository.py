@@ -17,7 +17,6 @@ class User_repository():
         rows = self._connection.execute(
             "SELECT * FROM users WHERE (username = %s AND passcode = %s)", [username, password]
             )
-        #'SELECT * from users WHERE username = %s AND password = %s', [username, password]
         # TODOs: Implement error checks insted of IF
         if rows:
             row = rows[0]
@@ -30,7 +29,13 @@ class User_repository():
     def add(self, id, name, username, password):
         user = User(id, name, username, password)
         if user.is_valid():
-            self._connection.execute('INSERT INTO users (name, username, passcode) VALUES (%s, %s, %s)', [user.name, user.username, user.password])
+            self._connection.execute(
+                'INSERT INTO users (name, username, passcode) VALUES (%s, %s, %s)', [user.name, user.username, user.password]
+                )
+            # row = self._connection.execute(
+            #     "SELECT id FROM users WHERE (username = %s AND passcode = %s)", [user.username, user.password]
+            #     )
+            # user.id = id
             return (True, user)
         return (False, user.errors)
     
@@ -40,6 +45,6 @@ class User_repository():
     def delete(self, user_id):
         pass
     
-    # use: account login form  -->> retrive user id 
-    def login(self, id_to_match):
-        return self.find(id_to_match)
+    # # use: account login form  -->> retrive user id 
+    # def login(self, id_to_match):
+    #     return self.find(id_to_match)

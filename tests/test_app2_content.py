@@ -27,7 +27,7 @@ from playwright.sync_api import Page, expect
 def test_get_home(page, test_web_address):
     page.goto(f"http://{test_web_address}/")
     title = page.locator("h1#title")
-    expect(title).to_have_text("Chitter App")
+    expect(title).to_have_text("TwittEX App")
 
 """  GET '/' list of posts """
 def test_get_posts_in_home(page, test_web_address):
@@ -53,26 +53,30 @@ def test_get_account_register(page, test_web_address):
     expect(title_tag).to_have_text("Register")
 
 def test_get_account_logout(web_client, page, test_web_address):
-    response = web_client.post('/user/login', data={'username': 'Peter Pan', 'password': 'peter&1234'})
-    #assert response.status_code == 200
+    response = web_client.post('/user/login', data={'username': 'peterpan', 'passcode': 'peter&1234'})
+    assert response.status_code == 302
+    
     page.goto(f"http://{test_web_address}/account/logout")
     title_tag = page.locator("h1#title")
-    expect(title_tag).to_have_text("Chitter App")
+    expect(title_tag).to_have_text("TwittEX App")
     
     
 ############################
 #  USER FUNCTIONS
 #
 #
-"""    GET '/user/<section>'     """
-def test_get_user_login(page, test_web_address):
-    page.goto(f"http://{test_web_address}/user/login")
+"""    POST '/user/<section>'     """
+def test_get_user_login(web_client, page, test_web_address):
+    #page.goto(f"http://{test_web_address}/user/login")
+    response = web_client.post('/user/login', data={'username': '1', 'passcode': '1'})
+    assert response.status_code == 200
     title = page.locator("h1#title")
-    expect(title).to_have_text("Home Page")
+    expect(title).to_have_text("TwittEX App")
+    
 def test_get_user_register(page, test_web_address):
     page.goto(f"http://{test_web_address}/user/register")
     title = page.locator("h1#title")
-    expect(title).to_have_text("Home Page")
+    expect(title).to_have_text("TwittEX App")
 
 
 
